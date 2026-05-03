@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-brand-bg: #0F172A;
+  --color-brand-header: #1E293B;
+  --color-brand-sidebar: #111827;
+  --color-brand-card: #1E293B;
+  --color-brand-accent: #38BDF8;
+  --color-brand-border: #334155;
+  --color-brand-text: #F8FAFC;
+  --color-brand-muted: #94A3B8;
+  
+  --color-chess-light: #E2E8F0;
+  --color-chess-dark: #64748B;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-bg text-brand-text selection:bg-brand-accent/30;
+  }
+}
+
+/* Custom Scrollbar to match theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-brand-bg;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-brand-border rounded-full hover:bg-slate-700 transition-colors;
+}

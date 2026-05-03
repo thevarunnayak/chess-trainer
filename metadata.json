@@ -1,0 +1,6 @@
+{
+  "name": "Chess Trainer",
+  "description": "A modern, responsive chess application with AI opponents, move validation, and tactical training tools.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
