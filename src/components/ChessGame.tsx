@@ -60,6 +60,7 @@ const PlayerBar: React.FC<{
 
 export const ChessGameContainer: React.FC = () => {
     const [gameState, setGameState] = useState<'setup' | 'playing'>('setup');
+    const [showResetModal, setShowResetModal] = useState(false); 
     const [config, setConfig] = useState<{ 
         mode: GameMode, 
         difficulty: Difficulty, 
@@ -112,28 +113,29 @@ export const ChessGameContainer: React.FC = () => {
         setGameState('playing');
     };
 
-    const handleReset = () => {
-        if (isGameOver || confirm('Are you sure you want to resign and return to menu?')) {
-            setHasFiredConfetti(false);
-            setGameState('setup');
-            resetGame();
-        }
+    const confirmReset = () => { // ✅ ADDED
+        setShowResetModal(false);
+        setHasFiredConfetti(false);
+        setGameState('setup');
+        resetGame();
     };
 
+    const handleReset = () => { // ✅ UPDATED
+        if (isGameOver) {
+            confirmReset();
+        } else {
+            setShowResetModal(true);
+        }
+    };
     return (
         <div className="min-h-screen bg-brand-bg flex flex-col font-sans">
             {/* Professional Header */}
             <header className="h-[60px] bg-brand-header border-b border-brand-border flex items-center justify-between px-6 shrink-0 shadow-md">
                 <div className="flex items-center gap-2 text-brand-accent font-black text-xl tracking-tighter">
-                    <span className="text-2xl">♜</span> CHESS TRAINER
+                    <span className="text-2xl">♜</span> SHAH MAT!
                 </div>
                 <div className="flex items-center gap-6">
-                    <span className="hidden sm:block text-brand-muted text-xs font-bold uppercase tracking-widest">
-                        Session: {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                    </span>
-                    <div className="bg-emerald-600 text-white px-2 py-1 rounded text-[10px] font-black uppercase tracking-wider">
-                        {game.isGameOver() ? 'Game Over' : 'Game In Progress'}
-                    </div>
+
                 </div>
             </header>
 
@@ -251,6 +253,48 @@ export const ChessGameContainer: React.FC = () => {
                     )}
                 </AnimatePresence>
             </div>
+             <AnimatePresence>
+                {showResetModal && (
+                    <motion.div
+                        initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+                        animate={{ opacity: 1, backdropFilter: 'blur(8px)' }}
+                        exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+                        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                            className="w-[90%] max-w-sm bg-brand-card border border-brand-border rounded-2xl p-6 shadow-2xl"
+                        >
+                            <h2 className="text-xl font-black text-brand-text mb-2">
+                                Resign Game?
+                            </h2>
+
+                            <p className="text-sm text-brand-muted mb-6">
+                                Are you sure you want to resign and return to menu?
+                            </p>
+
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={() => setShowResetModal(false)}
+                                    className="flex-1 py-3 rounded-xl bg-white/5 text-brand-text font-bold hover:bg-white/10 transition"
+                                >
+                                    Cancel
+                                </button>
+
+                                <button
+                                    onClick={confirmReset}
+                                    className="flex-1 py-3 rounded-xl bg-brand-accent text-brand-bg font-black hover:bg-brand-accent/80 transition shadow-lg shadow-brand-accent/20"
+                                >
+                                    Resign
+                                </button>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };

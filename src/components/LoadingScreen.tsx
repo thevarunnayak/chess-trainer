@@ -32,12 +32,12 @@ export const LoadingScreen: React.FC = () => {
             transition={{ delay: 0.5, type: 'spring' }}
             className="absolute -bottom-2 -right-2 bg-brand-text text-brand-bg px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase"
           >
-            Trainer
+            KWAZYYY
           </motion.div>
         </div>
         
         <h1 className="text-4xl font-black text-brand-text tracking-tighter mb-2 italic">
-          CHESS <span className="text-brand-accent">TRAINER</span>
+          SHAH <span className="text-brand-accent">MAT!</span>
         </h1>
         
         <div className="w-48 h-1 bg-brand-border rounded-full overflow-hidden">
