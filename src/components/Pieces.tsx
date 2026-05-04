@@ -10,7 +10,7 @@ export const PieceSVG: React.FC<{
   const piece = type.toLowerCase();
 
   // Construct image path
-const src = `${import.meta.env.BASE_URL}pieces/${color}${piece}.png`;
+  const src = `/pieces/${color}${piece}.png`;
 
   return (
     <img
